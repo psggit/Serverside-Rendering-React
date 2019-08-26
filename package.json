@@ -6,9 +6,12 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack --config webpack.prod.js",
-    "start:dev": "NODE_ENV=development webpack-dev-server --open --config webpack.dev.js",
-    "start": "NODE_ENV=production node server.js"
+    "//build": "NODE_ENV=production webpack --config webpack.prod.js",
+    "start:dev": "NODE_ENV=development webpack-dev-server --open --config webpack.dev.js --history-api-fallback",
+    "start": "NODE_ENV=production node server.js",
+    "build-client": "BASE_URL=basketball38.hasura-app.io webpack --config ./webpack.prod.js",
+    "build-ssr": "BASE_URL=basketball38.hasura-app.io webpack --config ./webpack.ssr.js",
+    "build": "yarn run build-client && yarn run build-ssr"
   },
   "keywords": [],
   "author": "",
@@ -27,15 +30,20 @@
     "node-sass": "^4.10.0",
     "path": "^0.12.7",
     "postcss-loader": "^3.0.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-dev-server": "^3.1.10",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "autoprefixer": "^9.6.0",
     "compression-webpack-plugin": "^1.1.0",
+    "postcss-scss": "^2.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "webpack": "^4.6.0"

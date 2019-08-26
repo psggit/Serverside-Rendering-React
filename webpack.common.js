@@ -2,6 +2,13 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
+const minfyConfigHTML = {
+  collapseWhitespace: true,
+  minifyCSS: true,
+  minifyJS: false,
+  minifyURLs: true,
+  removeComments: false
+}
 
 module.exports = {
   entry: {
@@ -18,8 +25,8 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-                'style-loader',
-                'css-loader'
+          'style-loader',
+          'css-loader'
         ]
       },
       {
@@ -36,10 +43,16 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
+      title: "Home",
+      filename: "home.html",
+      template: path.resolve(__dirname, "./html/home.html"),
+      minify: minfyConfigHTML
+    }),
+    new HtmlWebpackPlugin({
       title: 'Output Management',
       template: './index.html'
     }),
-    new CompressionPlugin({  
+    new CompressionPlugin({
       test: /\.js$|\.css$|\.html$/,
       filename: "[path].gz[query]",
       exclude: /node_modules/,
@@ -50,7 +63,8 @@ module.exports = {
   ],
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: "/"
   },
   optimization: {
     splitChunks: {
